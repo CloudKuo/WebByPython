@@ -6,9 +6,11 @@ import pandas as pd
 from PIL import Image
 from streamlit_lottie import st_lottie
 
+
 def load_lottie_file(file_path: str):
     with open(file_path, "r") as file:
         return json.load(file)
+
 
 def load_lottie_url(lottie_url):
     r = requests.get(lottie_url)
@@ -21,20 +23,29 @@ def use_local_css_style(css_file_name_path):
     with open(css_file_name_path, "r") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
+
+pages = {
+    "My information": [
+        st.Page("mainWeb.py", title="All about me"),
+    ],
+    "Chatbot": [
+        st.Page("pages/chatBotPages.py", title="Chatbot of OpenAI"),
+    ],
+}
+
 if __name__ == '__main__':
     # More emojis https://www.webfx.com/tools/emoji-cheat-sheet/
     # set basi page config
     st.set_page_config(page_title="My first python web", page_icon=":beaming_face_with_smiling_eyes:", layout="wide",
                        menu_items={'Get Help': 'https://www.extremelycoolapp.com/help'})
 
-    st.page_link("mainWeb.py", label="Home", icon="🏠")
-    st.page_link("pages/chatBotWeb.py", label="ChatBot", icon="🤖️")
     use_local_css_style("cssStyle/style.css")
     # Image files
     deep_image = Image.open("image/uuuuuu.png")
 
     # Load Lottie Assets
-    lottie_animation_from_url = load_lottie_url("https://lottie.host/2462c497-4d71-4c4f-a594-8ad24598d938/qd4FQ0ypj0.json")
+    lottie_animation_from_url = load_lottie_url(
+        "https://lottie.host/2462c497-4d71-4c4f-a594-8ad24598d938/qd4FQ0ypj0.json")
     lottie_animation_from_file = load_lottie_file("Animation/Animation - 1724484735639.json")
     #     Header section
     with st.container():
@@ -64,7 +75,6 @@ if __name__ == '__main__':
             st.write("Pegatron Engineer now.")
             st.image(deep_image, width=300)
 
-
         with right_column:
             st_lottie(lottie_animation_from_url, height=200, key="LottieFromURL", speed=1, loop=True)
             st_lottie(lottie_animation_from_file, height=200, key="LottieFromFile", speed=2, loop=True)
@@ -82,7 +92,6 @@ if __name__ == '__main__':
         <input type="email" name="email" placeholder="Your Email" required>
         <textarea name="message" placeholder="Your message here" required></textarea>
         <button type="submit">Send</button>
-        <div class="test">ffdf</div>
         </form>
         """
         left_column, right_column = st.columns(2)
@@ -96,4 +105,5 @@ if __name__ == '__main__':
         st.header(":gray-background[掲示板]")
         st.text_area("Write down your suggestion :smile:", height=200, key="dashboard")
 
-
+    pg = st.navigation(pages)
+    pg.run()
