@@ -1,6 +1,7 @@
 import requests
 import streamlit as st
 import json
+import pandas as pd
 
 from PIL import Image
 from streamlit_lottie import st_lottie
@@ -26,6 +27,8 @@ if __name__ == '__main__':
     st.set_page_config(page_title="My first python web", page_icon=":beaming_face_with_smiling_eyes:", layout="wide",
                        menu_items={'Get Help': 'https://www.extremelycoolapp.com/help'})
 
+    st.page_link("mainWeb.py", label="Home", icon="🏠")
+    st.page_link("pages/chatBotWeb.py", label="ChatBot", icon="🤖️")
     use_local_css_style("cssStyle/style.css")
     # Image files
     deep_image = Image.open("image/uuuuuu.png")
@@ -42,6 +45,14 @@ if __name__ == '__main__':
         st.write(":orange[Learn more] -> :material/Home: https://en.dragon-ball-official.com/")
         st.write(":red[My Youtube Channel] -> :material/Videocam: https://www.youtube.com/@Cloud-theChosenOne/")
         st.markdown("[Watch Video](https://youtu.be/MYSIcuEt2oU?si=FGup4KDLCmfLvlWj)")
+        st.checkbox("Test check box", key="check box")
+        st.button("Click it", key="click_btn")
+        st.write("Below is our salary table", pd.DataFrame(
+            {
+                "Employee": ["Amber", "Ian", "Johnny", "Targaret"],
+                "Salary": [100, 222, 333, 444],
+            }
+        ))
 
     # My Description
     with st.container():
@@ -71,6 +82,7 @@ if __name__ == '__main__':
         <input type="email" name="email" placeholder="Your Email" required>
         <textarea name="message" placeholder="Your message here" required></textarea>
         <button type="submit">Send</button>
+        <div class="test">ffdf</div>
         </form>
         """
         left_column, right_column = st.columns(2)
